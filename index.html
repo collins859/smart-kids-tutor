@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌈 SmartKids AI Tutor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 🌈 Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-message">Preparing your magical learning journey...</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    
+    <!-- 🎪 Header -->
+    <header>
+        <div class="header-bubbles" id="header-bubbles"></div>
+        <div class="container header-content">
+            <h1>🌈 SmartKids AI Tutor</h1>
+            <p>Where learning becomes a colorful adventure!</p>
+        </div>
+    </header>
+    
+    <!-- 🍭 Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <span>SmartKids</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#subjects">Subjects</a></li>
+                <li><a href="#progress">My Progress</a></li>
+                <li><a href="#parents">For Parents</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 🎠 Main Content -->
+    <main class="container">
+        <!-- 🎡 Hero Section -->
+        <section class="hero" id="home">
+            <div class="character-container">
+                <div class="speech-bubble" id="speech-bubble">
+                    <p>Hello explorer! Ready for a learning adventure?</p>
+                </div>
+                <img src="https://cdn.pixabay.com/photo/2021/08/04/13/06/robot-6521720_960_720.png" alt="AI Tutor" id="tutor-character" class="character-wave">
+            </div>
+            
+            <!-- 🎈 Age Group Selector -->
+            <section class="age-group-selector">
+                <h2 class="section-title">Select Your Age Group</h2>
+                <div class="age-buttons">
+                    <button class="age-btn" data-age="3-5">3-5 Years</button>
+                    <button class="age-btn active" data-age="6-8">6-8 Years</button>
+                    <button class="age-btn" data-age="9-12">9-12 Years</button>
+                </div>
+            </section>
+        </section>
+        
+        <!-- 🔍 Subject Search -->
+        <section class="subject-search" id="subjects">
+            <h2 class="section-title">Find Learning Resources</h2>
+            <div class="search-container">
+                <input type="text" id="subject-search-input" placeholder="What would you like to learn today?">
+                <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div id="search-results"></div>
+        </section>
+        
+        <!-- 🎨 Featured Subjects -->
+        <section class="featured-subjects">
+            <h2 class="section-title">Popular Subjects</h2>
+            <div class="subject-grid">
+                <div class="subject-card math-card" data-subject="math">
+                    <div class="card-icon">➕</div>
+                    <h3>Math Adventures</h3>
+                    <p>Learn numbers, shapes, and problem solving!</p>
+                </div>
+                <div class="subject-card reading-card" data-subject="reading">
+                    <div class="card-icon">📚</div>
+                    <h3>Reading World</h3>
+                    <p>Discover stories and improve your reading!</p>
+                </div>
+                <div class="subject-card science-card" data-subject="science">
+                    <div class="card-icon">🔬</div>
+                    <h3>Science Explorers</h3>
+                    <p>Fun experiments and discoveries!</p>
+                </div>
+                <div class="subject-card coding-card" data-subject="coding">
+                    <div class="card-icon">💻</div>
+                    <h3>Coding Fun</h3>
+                    <p>Start your programming journey!</p>
+                </div>
+                <div class="subject-card art-card" data-subject="art">
+                    <div class="card-icon">🎨</div>
+                    <h3>Art & Creativity</h3>
+                    <p>Express yourself through art!</p>
+                </div>
+                <div class="subject-card geography-card" data-subject="geography">
+                    <div class="card-icon">🌍</div>
+                    <h3>World Explorer</h3>
+                    <p>Learn about countries and cultures!</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 📈 Progress Section -->
+        <section class="progress-section" id="progress">
+            <h2 class="section-title">My Learning Progress</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%"></div>
+                </div>
+                <div class="progress-stars">
+                    <span class="star active">★</span>
+                    <span class="star active">★</span>
+                    <span class="star">★</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 🎮 Interactive Learning -->
+        <section class="interactive-learning">
+            <h2 class="section-title">Try a Quick Lesson</h2>
+            <div class="math-problem">
+                <div class="number" id="number1">5</div>
+                <div class="operator">+</div>
+                <div class="number" id="number2">3</div>
+                <div class="equals">=</div>
+                <div class="answer-box" id="answer-box">?</div>
+            </div>
+            <button class="check-answer" id="check-answer"><i class="fas fa-check"></i> Check Answer</button>
+        </section>
+    </main>
+    
+    <!-- 🏁 Footer -->
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-robot"></i> SmartKids AI Tutor
+            </div>
+            <p>Making learning fun and effective for children everywhere</p>
+            
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">How It Works</a>
+                <a href="#">Pricing</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Support</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61573144430623"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/+2347019629341"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/Collinschigozirim"><i class="fab fa-telegram"></i></a>
+                <a href="https://www.linkedin.com/in/chigozirim-collins-419276346?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BhThtGkSrSqyDWR947ffOuA%3D%3D"><i class="fa-brands fa-linkedin"></i></a>
+             
+            </div>
+            
+            <p class="copyright">&copy; 2023 SmartKids AI Tutor. All rights reserved.</p>
+        </div>
+    </footer>
+    
+<script src="script.js"></script>
+</body>
+</html>
