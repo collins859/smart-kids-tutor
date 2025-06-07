@@ -1,5 +1,5 @@
-
- // 🍔 Mobile Menu Toggle
+ 
+        // 🍔 Mobile Menu Toggle
         document.getElementById('mobile-menu-btn').addEventListener('click', function() {
             document.getElementById('nav-links').classList.toggle('active');
             this.innerHTML = this.innerHTML.includes('bars') ? 
@@ -40,7 +40,7 @@
             });
         });
         
-        // 🔍 Subject Search API Integration
+        // 🔍 Enhanced Search Function with APIs
         document.getElementById('search-btn').addEventListener('click', async function() {
             const query = document.getElementById('subject-search-input').value;
             const ageGroup = document.querySelector('.age-btn.active').dataset.age;
@@ -71,48 +71,35 @@
             document.getElementById('loading-screen').classList.remove('hidden');
             
             try {
-                // Simulating API response for demo
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                let results = [];
                 
-                const mockResults = [
-                    {
-                        id: 1,
-                        title: `Basic ${query} for Ages ${ageGroup}`,
-                        description: `A fun introduction to ${query} designed specifically for ${ageGroup} year olds. Includes interactive games and activities.`,
-                        subject: query.toLowerCase()
-                    },
-                    {
-                        id: 2,
-                        title: `${query} Adventure Game`,
-                        description: `Learn ${query} through an exciting adventure story with puzzles to solve.`,
-                        subject: query.toLowerCase()
-                    },
-                    {
-                        id: 3,
-                        title: `${query} Quiz Challenge`,
-                        description: `Test your knowledge with this interactive quiz about ${query}.`,
-                        subject: query.toLowerCase()
-                    }
-                ];
+                // Search appropriate API based on subject
+                if (query.toLowerCase().includes('math')) {
+                    results = await searchKhanAcademy(query, ageGroup);
+                } else if (query.toLowerCase().includes('science') || query.toLowerCase().includes('space')) {
+                    results = await getNASAContent();
+                } else if (query.toLowerCase().includes('reading') || query.toLowerCase().includes('word')) {
+                    const wordData = await getWordOfTheDay();
+                    results = wordData ? [wordData] : [];
+                } else {
+                    // Default search (mock data)
+                    results = [
+                        {
+                            id: 1,
+                            title: `Basic ${query} for Ages ${ageGroup}`,
+                            description: `A fun introduction to ${query} designed specifically for ${ageGroup} year olds. Includes interactive games and activities.`,
+                            subject: query.toLowerCase()
+                        },
+                        {
+                            id: 2,
+                            title: `${query} Adventure Game`,
+                            description: `Learn ${query} through an exciting adventure story with puzzles to solve.`,
+                            subject: query.toLowerCase()
+                        }
+                    ];
+                }
                 
-                const resultsContainer = document.getElementById('search-results');
-                resultsContainer.innerHTML = mockResults.map(result => `
-                    <div class="search-result">
-                        <h4>${result.title}</h4>
-                        <p>${result.description}</p>
-                        <button class="start-lesson" data-id="${result.id}">
-                            <i class="fas fa-play"></i> Start Learning
-                        </button>
-                    </div>
-                `).join('');
-                
-                // Add click handlers to the lesson buttons
-                document.querySelectorAll('.start-lesson').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        startLesson(this.dataset.id);
-                    });
-                });
-                
+                displayResults(results);
             } catch (error) {
                 console.error('Search error:', error);
                 document.getElementById('search-results').innerHTML = `
@@ -126,26 +113,163 @@
             }
         });
         
-        function startLesson(lessonId) {
-            // Show loading screen
-            document.getElementById('loading-screen').classList.remove('hidden');
+        // API Functions
+        async function searchKhanAcademy(query, ageGroup) {
+            try {
+                // Convert age group to Khan Academy grade level
+                const gradeLevels = {
+                    '3-5': 'early-math,cc-early-math',
+                    '6-8': 'arithmetic,pre-algebra',
+                    '9-12': 'algebra,geometry'
+                };
+                
+                // Note: In a real implementation, you would use the actual Khan Academy API
+                // This is a simulation for demonstration purposes
+                console.log(`Simulating Khan Academy search for: ${query} (age ${ageGroup})`);
+                
+                // Simulated response
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                return [
+                    {
+                        title: `Khan Academy: ${query} Basics`,
+                        description: `Learn the fundamentals of ${query} with fun videos and exercises.`,
+                        url: `https://www.khanacademy.org/search?page_search_query=${encodeURIComponent(query)}`,
+                        type: 'video'
+                    },
+                    {
+                        title: `Interactive ${query} Exercises`,
+                        description: `Practice ${query} skills with interactive problems.`,
+                        url: `https://www.khanacademy.org/search?page_search_query=${encodeURIComponent(query)}`,
+                        type: 'exercise'
+                    }
+                ];
+            } catch (error) {
+                console.error('Khan Academy API error:', error);
+                return [];
+            }
+        }
+        
+        async function getNASAContent() {
+            try {
+                // Note: Using demo key - in production you'd use your own API key
+                const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=3');
+                const data = await response.json();
+                
+                return data.map(item => ({
+                    title: item.title,
+                    description: item.explanation,
+                    url: item.url,
+                    date: item.date,
+                    media_type: item.media_type
+                }));
+            } catch (error) {
+                console.error('NASA API error:', error);
+                return [];
+            }
+        }
+        
+        async function getWordOfTheDay() {
+            try {
+                // Note: In a real implementation, you would use the actual Wordnik API with your API key
+                // This is a simulation for demonstration purposes
+                console.log('Simulating Word of the Day API call');
+                
+                // Simulated response
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const words = [
+                    {
+                        word: "Adventure",
+                        definition: "An exciting or very unusual experience.",
+                        example: "Going to the jungle was a great adventure."
+                    },
+                    {
+                        word: "Discover",
+                        definition: "Find something or someone unexpectedly.",
+                        example: "Scientists discover new species every year."
+                    },
+                    {
+                        word: "Curious",
+                        definition: "Eager to know or learn something.",
+                        example: "The curious child asked many questions."
+                    }
+                ];
+                
+                return words[Math.floor(Math.random() * words.length)];
+            } catch (error) {
+                console.error('Word of the Day API error:', error);
+                return null;
+            }
+        }
+        
+        async function getMathFact(number) {
+            try {
+                const response = await fetch(`http://numbersapi.com/${number}/math?json`);
+                const data = await response.json();
+                
+                return {
+                    number: number,
+                    fact: data.text
+                };
+            } catch (error) {
+                console.error('Numbers API error:', error);
+                return null;
+            }
+        }
+        
+        function displayResults(results) {
+            const resultsContainer = document.getElementById('search-results');
             
-            // In a real app, this would redirect to the lesson page
-            // or load the lesson content dynamically
-            setTimeout(() => {
-                // Rainbow confetti for lesson start
-                createConfetti(50);
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="search-result">
+                        <p>No results found. Try a different search term.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            resultsContainer.innerHTML = results.map(result => `
+                <div class="search-result">
+                    <h4>${result.title}</h4>
+                    <p>${result.description}</p>
+                    ${result.url ? `<a href="${result.url}" target="_blank" class="start-lesson"><i class="fas fa-external-link-alt"></i> View Resource</a>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        // Initialize API content on page load
+        async function initializeAPIContent() {
+            // Word of the Day
+            const wordData = await getWordOfTheDay();
+            if (wordData) {
+                document.querySelector('#word-of-the-day .word-display').textContent = wordData.word;
+                document.querySelector('#word-of-the-day .word-definition').textContent = wordData.definition;
+            }
+            
+            // NASA Image of the Day
+            const nasaData = await getNASAContent();
+            if (nasaData.length > 0) {
+                const nasaItem = nasaData[0];
+                const nasaContainer = document.querySelector('#nasa-image .image-container');
                 
-                // Show success message
-                const speechBubble = document.getElementById('speech-bubble');
-                speechBubble.innerHTML = `Let's begin Lesson ${lessonId}! <i class="fas fa-smile-beam"></i>`;
+                if (nasaItem.media_type === 'image') {
+                    nasaContainer.innerHTML = `<img src="${nasaItem.url}" alt="${nasaItem.title}">`;
+                } else {
+                    nasaContainer.innerHTML = `<p>Today's NASA content is a video: <a href="${nasaItem.url}" target="_blank">Watch here</a></p>`;
+                }
                 
-                // Hide loading screen
-                document.getElementById('loading-screen').classList.add('hidden');
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 2000);
+                document.querySelector('#nasa-image .image-explanation').textContent = 
+                    nasaItem.explanation.substring(0, 150) + '...';
+            }
+            
+            // Math Fact
+            const mathFact = await getMathFact(Math.floor(Math.random() * 10) + 1);
+            if (mathFact) {
+                document.querySelector('#math-fact .fact-display').textContent = 
+                    `Did you know? ${mathFact.fact}`;
+            }
         }
         
         // ➕ Interactive Math Problem
@@ -274,39 +398,9 @@
                         card.style.transform = 'perspective(500px) rotateY(0) scale(1)';
                     });
                 });
+                
+                // Initialize API content
+                initializeAPIContent();
             }, 2500);
         });
-
-        // Example using free sound files
-const poemSongs = {
-    abc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    numbers: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    animals: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-};
-
-// Add this to your existing JavaScript
-// Update the poemCards.forEach loop to include lyrics display
-poemCards.forEach((card, index) => {
-    const playBtn = card.querySelector('.play-btn');
-    const audio = card.querySelector('audio');
-    const poemId = card.dataset.poem;
     
-    playBtn.addEventListener('click', function() {
-        // ... existing play/pause logic ...
-        
-        // Show lyrics for current poem
-        document.querySelectorAll('.lyrics-container').forEach(container => {
-            container.style.display = 'none';
-        });
-        document.querySelector(`.lyrics-container[data-poem="${poemId}"]`).style.display = 'block';
-        
-        // Animate lyrics
-        const lyricsContainer = document.querySelector(`.lyrics-container[data-poem="${poemId}"]`);
-        const lyricsLines = lyricsContainer.querySelectorAll('.lyrics p');
-        lyricsLines.forEach(line => {
-            line.style.animation = 'none';
-            void line.offsetWidth; // Trigger reflow
-            line.style.animation = 'slideIn 0.5s forwards';
-        });
-    });
-});

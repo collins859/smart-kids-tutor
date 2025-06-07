@@ -1,4 +1,5 @@
-/* 🎨 Vibrant Color Palette */
+
+        /* 🎨 Vibrant Color Palette */
         :root {
             --rainbow-1: #FF9AA2;
             --rainbow-2: #FFB7B2;
@@ -719,6 +720,39 @@
             opacity: 0.8;
         }
 
+        /* API Features Section */
+        .api-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .api-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s;
+        }
+
+        .api-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .word-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--purple-magic);
+            margin: 15px 0;
+        }
+
+        .image-container img {
+            width: 100%;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
         /* ✨ Animations */
         @keyframes spin {
             from { transform: rotate(0deg); }
@@ -954,3 +988,4 @@
                 font-size: 1.2rem;
             }
         }
+    
